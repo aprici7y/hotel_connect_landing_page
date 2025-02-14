@@ -11,8 +11,7 @@ import {
   Layers
 } from 'lucide-react';
 import CountUp from 'react-countup';
-import '../styles.css'; 
-
+import '../styles.css';
 
 const LandingPage = () => {
   const [activeTab, setActiveTab] = useState('hotelier');
@@ -34,7 +33,6 @@ const LandingPage = () => {
 
   const [hotelCount, setHotelCount] = useState(0);
   const [supplierCount, setSupplierCount] = useState(0);
-
 
   useEffect(() => {
     // Simulate fetching data from API or backend
@@ -123,74 +121,83 @@ const LandingPage = () => {
     <div className="min-h-screen bg-gradient-to-b from-white to-blue-50">
       {/* Navbar */}
       <nav className="bg-blue-600 text-white py-4">
-        <div className="max-w-6xl mx-auto flex justify-between items-center">
+        <div className="max-w-6xl mx-auto flex justify-between items-center px-4">
           <div className="text-2xl font-bold">HotelConnect</div>
-          <div className="space-x-4">
+          <div className="space-x-4 hidden md:flex">
             <a href="#about" className="hover:text-blue-300">Über uns</a>
             <a href="#pricing" className="hover:text-blue-300">Preise</a>
             <a href="#integration" className="hover:text-blue-300">Integrationsprozess</a>
             <a href="#contact" className="hover:text-blue-300">Kontakt</a>
           </div>
+          <div className="md:hidden">
+            {/* Mobile menu button */}
+            <button className="text-white focus:outline-none">
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+              </svg>
+            </button>
+          </div>
         </div>
       </nav>
 
-     {/* Hero Section */}
-     <header className="py-20 px-4 bg-blue-100">
-      <div className="max-w-6xl mx-auto text-center">
-        <h1 className="text-5xl font-bold mb-6 text-gray-900">
-          Revolutionieren Sie Ihr Hotel-Lieferkettenmanagement
-        </h1>
-        <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
-          Verbinden Sie Hotels nahtlos mit Lieferanten. Optimieren Sie Ihren Bestellprozess, reduzieren Sie Kosten und verwalten Sie alle Ihre Lieferungen an einem Ort.
-        </p>
+      {/* Hero Section */}
+      <header className="py-20 px-4 bg-blue-100">
+        <div className="max-w-6xl mx-auto text-center">
+          <h1 className="text-5xl font-bold mb-6 text-gray-900">
+            Revolutionieren Sie Ihr Hotel-Lieferkettenmanagement
+          </h1>
+          <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+            Verbinden Sie Hotels nahtlos mit Lieferanten. Optimieren Sie Ihren Bestellprozess, reduzieren Sie Kosten und verwalten Sie alle Ihre Lieferungen an einem Ort.
+          </p>
 
-        {/* Dynamic counters */}
-        <div className="flex justify-center gap-16 mb-12">
-          <div className="counter-container">
-            <h2 className="text-3xl font-semibold text-gradient">
-              <CountUp start={0} end={hotelCount} duration={2} />
-            </h2>
-            <p className="text-gray-600">Hotels auf der Plattform</p>
+          {/* Dynamic counters */}
+          <div className="flex justify-center gap-16 mb-12 flex-col md:flex-row">
+            <div className="counter-container mb-4 md:mb-0">
+              <h2 className="text-3xl font-semibold text-gradient">
+                <CountUp start={0} end={hotelCount} duration={2} />
+              </h2>
+              <p className="text-gray-600">Hotels auf der Plattform</p>
+            </div>
+            <div className="counter-container">
+              <h2 className="text-3xl font-semibold text-gradient">
+                <CountUp start={0} end={supplierCount} duration={2} />
+              </h2>
+              <p className="text-gray-600">Lieferanten auf der Plattform</p>
+            </div>
           </div>
-          <div className="counter-container">
-            <h2 className="text-3xl font-semibold text-gradient">
-              <CountUp start={0} end={supplierCount} duration={2} />
-            </h2>
-            <p className="text-gray-600">Lieferanten auf der Plattform</p>
+
+          {/* Tabs for Hotelier and Supplier */}
+          <div className="flex gap-4 justify-center flex-col md:flex-row">
+            <button
+              onClick={() => {
+                setActiveTab('hotelier');
+                setFormData((prev) => ({ ...prev, type: 'hotelier' }));
+              }}
+              className={`px-6 py-3 rounded-lg transition-colors mb-2 md:mb-0 md:mr-2 ${
+                activeTab === 'hotelier'
+                  ? 'bg-blue-600 text-white hover:bg-blue-700'
+                  : 'border-2 border-blue-600 text-blue-600 hover:bg-blue-50'
+              }`}
+            >
+              Für Hoteliers
+            </button>
+            <button
+              onClick={() => {
+                setActiveTab('supplier');
+                setFormData((prev) => ({ ...prev, type: 'supplier' }));
+              }}
+              className={`px-6 py-3 rounded-lg transition-colors ${
+                activeTab === 'supplier'
+                  ? 'bg-blue-600 text-white hover:bg-blue-700'
+                  : 'border-2 border-blue-600 text-blue-600 hover:bg-blue-50'
+              }`}
+            >
+              Für Lieferanten
+            </button>
           </div>
         </div>
+      </header>
 
-        {/* Tabs for Hotelier and Supplier */}
-        <div className="flex gap-4 justify-center">
-          <button
-            onClick={() => {
-              setActiveTab('hotelier');
-              setFormData((prev) => ({ ...prev, type: 'hotelier' }));
-            }}
-            className={`px-6 py-3 rounded-lg transition-colors ${
-              activeTab === 'hotelier'
-                ? 'bg-blue-600 text-white hover:bg-blue-700'
-                : 'border-2 border-blue-600 text-blue-600 hover:bg-blue-50'
-            }`}
-          >
-            Für Hoteliers
-          </button>
-          <button
-            onClick={() => {
-              setActiveTab('supplier');
-              setFormData((prev) => ({ ...prev, type: 'supplier' }));
-            }}
-            className={`px-6 py-3 rounded-lg transition-colors ${
-              activeTab === 'supplier'
-                ? 'bg-blue-600 text-white hover:bg-blue-700'
-                : 'border-2 border-blue-600 text-blue-600 hover:bg-blue-50'
-            }`}
-          >
-            Für Lieferanten
-          </button>
-        </div>
-      </div>
-    </header>
       {/* Features Section */}
       <section className="py-16 px-4 bg-white">
         <div className="max-w-6xl mx-auto">
@@ -213,61 +220,61 @@ const LandingPage = () => {
 
       {/* Pricing Section */}
       <section id="pricing" className="py-16 px-4 bg-gray-50">
-      <div className="max-w-6xl mx-auto">
-        <h2 className="text-3xl font-bold text-center text-gray-800 mb-12">
-          Unsere Preispläne
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {activeTab === 'hotelier'
-            ? pricing.hotelier.map((plan, index) => {
-                const Icon = iconMap[index % iconMap.length];
-                return (
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-3xl font-bold text-center text-gray-800 mb-12">
+            Unsere Preispläne
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {activeTab === 'hotelier'
+              ? pricing.hotelier.map((plan, index) => {
+                  const Icon = iconMap[index % iconMap.length];
+                  return (
+                    <div
+                      key={index}
+                      className="p-6 bg-white rounded-lg shadow-lg text-center hover:shadow-xl transition-shadow"
+                    >
+                      <div className="flex justify-center items-center mb-4">
+                        <Icon className="text-blue-600 w-10 h-10" />
+                      </div>
+                      <h3 className="text-2xl font-semibold mb-4 text-gray-700">
+                        {plan.title}
+                      </h3>
+                      <p className="text-4xl font-bold mb-4 text-gray-800">
+                        {plan.price}
+                      </p>
+                      <ul className="list-inside text-left space-y-2 text-gray-600">
+                        {plan.features.map((feature, idx) => (
+                          <li key={idx} className="flex items-center">
+                            <span className="mr-2 text-blue-600">✔</span>
+                            {feature}
+                          </li>
+                        ))}
+                      </ul>
+                      <button className="mt-6 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                        {plan.buttonText}
+                      </button>
+                    </div>
+                  );
+                })
+              : pricing.supplier.map((plan, index) => (
                   <div
                     key={index}
                     className="p-6 bg-white rounded-lg shadow-lg text-center hover:shadow-xl transition-shadow"
                   >
                     <div className="flex justify-center items-center mb-4">
-                      <Icon className="text-blue-600 w-10 h-10" />
+                      <BarChart className="text-blue-600 w-10 h-10" />
                     </div>
                     <h3 className="text-2xl font-semibold mb-4 text-gray-700">
                       {plan.title}
                     </h3>
-                    <p className="text-4xl font-bold mb-4 text-gray-800">
-                      {plan.price}
-                    </p>
-                    <ul className="list-inside text-left space-y-2 text-gray-600">
-                      {plan.features.map((feature, idx) => (
-                        <li key={idx} className="flex items-center">
-                          <span className="mr-2 text-blue-600">✔</span>
-                          {feature}
-                        </li>
-                      ))}
-                    </ul>
-                    <button className="mt-6 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-                      {plan.buttonText}
-                    </button>
+                    <p className="text-gray-600 mb-4">{plan.description}</p>
+                    <p className="text-gray-600 mb-4">{plan.calculation}</p>
+                    <p className="text-gray-600 mb-4">{plan.target}</p>
                   </div>
-                );
-              })
-            : pricing.supplier.map((plan, index) => (
-                <div
-                  key={index}
-                  className="p-6 bg-white rounded-lg shadow-lg text-center hover:shadow-xl transition-shadow"
-                >
-                  <div className="flex justify-center items-center mb-4">
-                    <BarChart className="text-blue-600 w-10 h-10" />
-                  </div>
-                  <h3 className="text-2xl font-semibold mb-4 text-gray-700">
-                    {plan.title}
-                  </h3>
-                  <p className="text-gray-600 mb-4">{plan.description}</p>
-                  <p className="text-gray-600 mb-4">{plan.calculation}</p>
-                  <p className="text-gray-600 mb-4">{plan.target}</p>
-                </div>
-              ))}
+                ))}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
 
       {/* Integration Section */}
       <section id="integration" className="py-16 px-4 bg-white">
@@ -302,8 +309,8 @@ const LandingPage = () => {
           <h2 className="text-3xl font-bold text-center mb-8">Heute starten</h2>
           <div className="bg-white rounded-lg shadow-lg p-8">
             <form onSubmit={handleSubmit}>
-              <div className="mb-6 flex gap-4">
-                <label className="flex items-center">
+              <div className="mb-6 flex gap-4 flex-col md:flex-row">
+                <label className="flex items-center mb-2 md:mb-0">
                   <input
                     type="radio"
                     name="type"
